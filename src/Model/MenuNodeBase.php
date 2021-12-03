@@ -172,7 +172,7 @@ class MenuNodeBase implements NodeInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -344,12 +344,11 @@ class MenuNodeBase implements NodeInterface
     }
 
     /**
-     * Get all child menu nodes of this menu node. This will filter out all
-     * non-NodeInterface children.
+     * Get the child nodes implementing NodeInterface
      *
-     * @return NodeInterface[]
+     * @return \Traversable<int, self>
      */
-    public function getChildren()
+    public function getChildren(): \Traversable
     {
         $children = [];
         foreach ($this->children as $child) {
@@ -359,7 +358,7 @@ class MenuNodeBase implements NodeInterface
             $children[] = $child;
         }
 
-        return $children;
+        return new \ArrayObject($children);
     }
 
     /**
@@ -573,7 +572,7 @@ class MenuNodeBase implements NodeInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'uri' => $this->getUri(),
