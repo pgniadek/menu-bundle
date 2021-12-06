@@ -68,7 +68,7 @@ class MenuNode extends MenuNodeBase implements
      */
     protected $publishable = true;
 
-    /**
+    /** 
      * @var \DateTime
      */
     protected $publishStartDate;
