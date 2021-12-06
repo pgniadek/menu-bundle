@@ -14,6 +14,7 @@ namespace Symfony\Cmf\Bundle\MenuBundle\Loader;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\Loader\NodeLoader;
 use Knp\Menu\NodeInterface;
+use Knp\Menu\ItemInterface;
 use Symfony\Cmf\Bundle\MenuBundle\Doctrine\Phpcr\Menu;
 use Symfony\Cmf\Bundle\MenuBundle\Event\CreateMenuItemFromNodeEvent;
 use Symfony\Cmf\Bundle\MenuBundle\Event\Events;
@@ -40,7 +41,7 @@ class VotingNodeLoader extends NodeLoader
         $this->dispatcher = $dispatcher;
     }
 
-    public function load($data)
+    public function load($data): ItemInterface
     {
         if (!$this->supports($data)) {
             throw new \InvalidArgumentException(sprintf(
@@ -57,13 +58,13 @@ class VotingNodeLoader extends NodeLoader
                 return $this->menuFactory->createItem('');
             }
 
-            return;
+            return null;
         }
 
         $item = $event->getItem() ?: $this->menuFactory->createItem($data->getName(), $data->getOptions());
 
         if (empty($item)) {
-            return;
+            return null;
         }
 
         if ($event->isSkipChildren()) {
